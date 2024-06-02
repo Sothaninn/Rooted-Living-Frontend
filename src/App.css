@@ -1,0 +1,170 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+}
+/* Header */
+.header-bar {
+  background-color: rgb(136, 78, 224);
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon, .favorite-icon, .cart-icon {
+  padding: 0px 15px;
+}
+
+#search-icon {
+  padding-right: 10px;
+}
+
+#search-bar {
+  background-color: white;
+  border-radius: 0.5em;
+  width: calc(80vw - 100px);
+}
+
+/* Slideshow */
+
+.slideshow {
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 500px;
+}
+
+.slideshowSlider {
+  white-space: nowrap;
+  transition: ease 1000ms;
+}
+
+.slide {
+  display: inline-block;
+  height: 400px;
+  width: 100%;
+  border-radius: 40px;
+}
+
+.slide:hover {
+  cursor: pointer;
+}
+
+/* Buttons */
+
+.slideshowDots {
+  text-align: center;
+}
+
+.slideshowDot {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  margin: 15px 7px 0px;
+
+  background-color: #c4c4c4;
+}
+
+.slideshowDot.active {
+  background-color: #6a0dad;
+}
+
+/* Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+  margin: 10px;
+}
+.grid-item {
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+/* Product Table */
+.item-info-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.item-title-price {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+}
+
+.item-buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.item-buttons button{
+  color: white;
+  font-size: small;
+}
+
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  color: white;
+  border-bottom: 1px solid #ffffff;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.tab.selected {
+  border-bottom: 3px solid #ffffff;
+  font-weight: bold;
+}
+
+.items {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  color: white;
+  border-bottom: 1px solid #ffffff;
+}
+
+.item {
+  text-align: center;
+}
+
+.item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.inner-add-item-modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 25px;
+  border-radius: 20px;
+  background-color: beige;
+}
+
