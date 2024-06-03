@@ -57,13 +57,14 @@ const ProfilePage = (props) => {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     ...formData,
-                    userId: "6656c891f67c292bcce8e1b2",
+                    userId: user._id,
                 }),
             })
 
             const data = await response.json();
             setUser(data.user);
             setIsEditing(false);
+            console.log('here');
         } catch (err) {
             console.error(err);
         }

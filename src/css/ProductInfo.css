@@ -1,19 +1,40 @@
+.product-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    color: white; /* Changed text color */
+
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
+}
+
 .image-picture {
-    width: 30vw;
+    flex: 2; /* Adjusted flex to allow more space for the image */
+    max-width: 30vw;
+}
+
+.image-picture img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px; /* Added border radius */
 }
 
 .product-info {
-    display: flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: space-between;
-    padding: 50px;
-    color: white;
+    flex: 1; /* Adjusted flex for the product info */
+    padding-left: 20px; /* Added padding for spacing */
 }
 
-.add-to-cart-button{
-    border: 1px solid white;
-    background-color: black;
-    padding: 5px;
-    border-radius: 4px;
+.add-to-cart-button Button {
+    background-color: #6a0dad; /* Changed button color */
+    color: white; /* Changed button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px 15px; /* Adjusted padding */
+}
+
+.add-to-cart-button Button:hover {
+    background-color: #4b077a; /* Changed button color on hover */
 }

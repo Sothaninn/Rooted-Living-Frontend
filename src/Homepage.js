@@ -16,7 +16,7 @@ import CartPage from "./CartPage";
 //admin
 import AddItemModal from './AddItemModal';
 
-import {images, tabs, items} from './data';
+import {tabs, typeFilter} from './data';
 import {
   BrowserRouter as Router,
   Route,
@@ -35,6 +35,7 @@ class Homepage extends React.Component {
       selectedItem: null,
       openCartPage: false,
       selectedTab : 'categories',
+      selectedTypeFilter:'Most Popular',
       loggedInUser: {},
       products: [],
       filteredProducts: [],
@@ -45,7 +46,10 @@ class Homepage extends React.Component {
 
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleCartClicked = this.handleCartClicked.bind(this);
+
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleCreateAccount = this.handleCreateAccount.bind(this);
+
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.debounce = this.debounce.bind(this);
     this.addItemToCart = this.addItemToCart.bind(this);
@@ -105,6 +109,21 @@ class Homepage extends React.Component {
     }
   }
 
+  async handleCreateAccount(b) {
+    try {
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(b),
+      });
+      const data = await response.json();
+
+      this.setState({ loggedInUser: data.user, loggedIn: true });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async addItemToCart(item, amount) {
     try {
         if (!amount) amount = 1;
@@ -135,6 +154,11 @@ class Homepage extends React.Component {
   handleTabClick(item) {
     this.setState({ selectedTab: item });
   }
+
+  handleTypeFilterClick(item) {
+    this.setState({ selectedTypeFilter: item });
+  }
+
 
   componentDidMount() {
     this.getAllProducts();
@@ -219,7 +243,11 @@ class Homepage extends React.Component {
       filteredProducts,
       openAddItemModal,
       editProductData,
+      selectedTab,
+      selectedTypeFilter,
     } = this.state;
+
+    
 
     console.log(loggedInUser, loggedIn);
 
@@ -263,37 +291,42 @@ class Homepage extends React.Component {
             <Routes>
               <Route path="/" exact element={
                 <>
-                <nav className="tabs">
-                  {tabs.map(tab => (
-                    <div 
-                      key={tab.name} 
-                      className={`tab ${this.state.selectedTab === tab.name ? 'selected' : ''}`}
-                      onClick={() => this.handleTabClick(tab.name)}
-                    >
-                      {tab.label}
-                    </div>
-                  ))}
-                </nav>
-                <div className="items">
-                  {this.state.selectedTab === 'categories' && items.map(item => (
-                    <div 
-                    key={item.title} 
-                    className="item"
-                    >
-                      <img src={item.image}  />
-                      <div className="title">{item.title}</div>
-                    </div>
-                  ))}
+            
+                <div className='navigation'>
+                  <nav className="tabs">
+                    {tabs.map(tab => (
+                      <div 
+                        key={tab.name} 
+                        className={`tab ${selectedTab === tab.name ? 'selected' : ''}`}
+                        onClick={() => this.handleTabClick(tab.name)}
+                      >
+                        {tab.label}
+                      </div>
+                    ))}
+                  </nav>
+                  <div className="type-filter">
+                    {selectedTab === 'categories' && typeFilter.map(item => (
+                      <div 
+                      key={item.title} 
+                      className={`type ${selectedTypeFilter === item.title ? 'selected' : ''}`}
+                      onClick={() => this.handleTypeFilterClick(item.title)}
+                      >
+                        <img src={item.image}  />
+                        <div className="title">{item.title}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
                 <Slideshow products={products} handleItemClick={this.handleItemClick} />
                   <br />
                   <br />
-                <ProductTable loggedIn = {loggedIn} user={loggedInUser} products={filteredProducts} handleItemClick={this.handleItemClick} handleAddToCart={this.addItemToCart} handleOpenEditItemModal={this.handleOpenEditItemModal} updateProducts={this.updateProducts}/>
+                <ProductTable loggedIn = {loggedIn} user={loggedInUser} products={filteredProducts} handleItemClick={this.handleItemClick} handleAddToCart={this.addItemToCart} handleOpenEditItemModal={this.handleOpenEditItemModal} selectedTypeFilter={selectedTypeFilter.slice(0, -1).toLowerCase()} updateProducts={this.updateProducts}/>
                 </>
               } />
               <Route path="/profile" exact element={<ProfilePage user={loggedInUser} handleLogout={() => this.setState({ loggedIn: false, loggedInUser: {} })} />} />
               <Route path="/cart" exact element={<CartPage products={products} user={loggedInUser} />} />
-              <Route path="/login" exact element={<LoginPage handleLogin={this.handleLogin} />} />
+              <Route path="/login" exact element={<LoginPage handleLogin={this.handleLogin} handleCreateAccount={this.handleCreateAccount} />} />
               <Route path="/product" exact element={<ProductInfoPage item={selectedItem} handleAddToCart={this.addItemToCart}/>} />
               
             </Routes>

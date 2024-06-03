@@ -4,7 +4,7 @@
 }
 /* Header */
 .header-bar {
-  background-color: rgb(136, 78, 224);
+  background-color: rgb(32, 31, 31);
   height: 10vh;
   display: flex;
   justify-content: space-between;
@@ -22,8 +22,9 @@
   align-items: center;
 }
 
-.profile-icon, .favorite-icon, .cart-icon {
+.profile-icon, .favorite-icon {
   padding: 0px 15px;
+  color: #6a0dad;
 }
 
 #search-icon {
@@ -36,89 +37,11 @@
   width: calc(80vw - 100px);
 }
 
-/* Slideshow */
+/* navigation tab */
 
-.slideshow {
-  margin: 0 auto;
-  overflow: hidden;
-  max-width: 500px;
+.navigation{
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
 }
-
-.slideshowSlider {
-  white-space: nowrap;
-  transition: ease 1000ms;
-}
-
-.slide {
-  display: inline-block;
-  height: 400px;
-  width: 100%;
-  border-radius: 40px;
-}
-
-.slide:hover {
-  cursor: pointer;
-}
-
-/* Buttons */
-
-.slideshowDots {
-  text-align: center;
-}
-
-.slideshowDot {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-
-  cursor: pointer;
-  margin: 15px 7px 0px;
-
-  background-color: #c4c4c4;
-}
-
-.slideshowDot.active {
-  background-color: #6a0dad;
-}
-
-/* Grid */
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  background-color: #2196F3;
-  padding: 10px;
-  margin: 10px;
-}
-.grid-item {
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-
-/* Product Table */
-.item-info-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.item-title-price {
-  display: flex;
-  flex-direction: column;
-  font-size: small;
-}
-
-.item-buttons{
-  display: flex;
-  flex-direction: row;
-}
-
-.item-buttons button{
-  color: white;
-  font-size: small;
-}
-
 
 .tabs {
   display: flex;
@@ -134,11 +57,11 @@
 }
 
 .tab.selected {
-  border-bottom: 3px solid #ffffff;
+  border-bottom: 3px solid #6a0dad;;
   font-weight: bold;
 }
 
-.items {
+.type-filter {
   display: flex;
   justify-content: space-around;
   padding: 20px;
@@ -146,16 +69,23 @@
   border-bottom: 1px solid #ffffff;
 }
 
-.item {
+.type {
   text-align: center;
 }
 
-.item img {
+.type.selected {
+  border-bottom: 3px solid #6a0dad;;
+  font-weight: bold;
+}
+
+.type img {
   width: 100px;
   height: 100px;
   object-fit: cover;
   margin-bottom: 10px;
 }
+
+/* Modal */
 
 .inner-add-item-modal{
   position: absolute;

@@ -54,13 +54,21 @@ class LoginPage extends React.Component {
         this.setState({ signupClicked: true });
     }
 
-    handleCreateAccount() {
+    async handleCreateAccount() {
         // Call Create Account Endpoint
         const {
             email, password, isAdmin
         } = this.state;
 
-        console.log(email, password, isAdmin);
+        let role = isAdmin?'admin':'user';
+
+        console.log(email, password, role);
+
+        const { handleCreateAccount } = this.props;
+    
+        await handleCreateAccount({email, password, role} );
+
+        this.setState({ loginsuccess: true });
     }
 
     handleSwitchChange() {

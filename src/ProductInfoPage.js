@@ -3,7 +3,7 @@ import {
     Button,
 } from '@mui/material';
 import './css/ProductInfo.css';
-import {images, tabs, items, imageDictionary} from './data';
+import {imageDictionary} from './data';
 
 class ProductInfoPage extends React.Component {
     constructor(props) {
@@ -18,25 +18,25 @@ class ProductInfoPage extends React.Component {
         const { item, handleAddToCart } = this.props;
         let { itemQuantity } =  this.state;
         return (
-            <div className="product-info">
+            <div className="product-detail">
                 <div className="image-picture">
-                    <img style={{
-                        width: '100%',
-                        objectFit: 'contain',
-                    }} src={imageDictionary[item.picture]} />
+                    <img src={imageDictionary[item.picture]} />
                 </div>
-                <div>
+                <div className="product-info">
                     <div>
-                        Item Name: {item.name}
+                        {item.name}
                     </div>
+                    <br/>
                     <div>
-                        Item Description: {item.description}
+                        {item.description}
                     </div>
+                    <br/>
                     <div>
-                        Item Price: {item.price}
+                        {item.price}
                     </div>
+                    <br/>
                     <div>
-                        QTY
+                        Quantity
                         <Button disabled={itemQuantity <= 0} onClick={() => this.setState({ itemQuantity: itemQuantity -= 1})}>-</Button>
                         {itemQuantity}
                         <Button onClick={() => this.setState({ itemQuantity: itemQuantity += 1})}>+</Button>

@@ -10,7 +10,7 @@ import Select from 'react-select';
 import {
     Navigate,
   } from "react-router-dom";
-import {images, tabs, items, imageDictionary} from './data';
+import {imageDictionary} from './data';
 
 
 class CartPage extends React.Component {
@@ -30,6 +30,8 @@ class CartPage extends React.Component {
         this.handleQuantityInputChange = this.handleQuantityInputChange.bind(this);
         this.deleteCartItem = this.deleteCartItem.bind(this);
         this.handleCheckout = this.handleCheckout.bind(this);
+        this.calculateTotalPrice = this.calculateTotalPrice.bind(this);
+
     }
 
     async handleCheckout() {
@@ -50,6 +52,14 @@ class CartPage extends React.Component {
         }
     }
 
+    calculateTotalPrice(cartItems) {
+        let totalPrice = 0;
+        cartItems.forEach((item) => {
+            totalPrice += item.price * item.q;
+        });
+        return totalPrice;
+    }
+
     async deleteCartItem(p) {
         const { user, products } = this.props;
         try {
@@ -67,9 +77,11 @@ class CartPage extends React.Component {
                     q: i.quantity,
                 });
             });
-            let tp = 0;
-            items.forEach((i) => tp += i.price);
-            this.setState({ totalPrice: tp, cartItems: items });
+
+            this.setState({ cartItems: items }, () => {
+                this.setState({ totalPrice: this.calculateTotalPrice(items) });
+            });
+
         } catch(err) {
             console.error(err);
         }
@@ -83,9 +95,10 @@ class CartPage extends React.Component {
         if (e.value === 10) {
             p.q = 10;
             this.setState({ selectedQuantity: 10 });
-        } else {
-            this.updateCartItemQuantity(p._id, e.value);
-        }
+        } 
+        
+        this.updateCartItemQuantity(p._id, e.value);
+        
     }
 
     async updateCartItemQuantity(id, newQuantity) {
@@ -99,6 +112,7 @@ class CartPage extends React.Component {
                     quantity: newQuantity,
                 }),
             })
+            this.getCartItems();
         } catch(err) {
             console.error(err);
         }
@@ -116,9 +130,7 @@ class CartPage extends React.Component {
                 });
             });
 
-            let tp = 0;
-            items.forEach((i) => tp += i.price);
-            this.setState({ totalPrice: tp, cartItems: items });
+            this.setState({ totalPrice: this.calculateTotalPrice(items), cartItems: items });
         } catch(err) {
             console.error(err);
         }
@@ -148,10 +160,7 @@ class CartPage extends React.Component {
                 { checkoutSuccess && <Navigate to="/" />}
                 Shopping Cart
                 <div className="cart-view">
-                    <div style={{
-                        backgroundColor: 'lightgrey',
-                        margin: '10px'
-                    }}>
+                    <div>
                         { cartItems.map((product, index) => (
                             <div key={index} className="cart-item">
                                 <div className="image-picture">
@@ -161,7 +170,8 @@ class CartPage extends React.Component {
                                     }} src={imageDictionary[product.picture]} />
                                 </div>
                                 <div className="cart-product-info">
-                                    Product Name: {product.name}
+                                    {product.name}
+
                                     <div>
                                         QTY
                                         {console.log(product.q)}
@@ -187,7 +197,7 @@ class CartPage extends React.Component {
                                     </div>
                                 </div>
                                 <div className="cart-product-info">
-                                    Product Price: {product.price}
+                                    {product.price}
                                     <ButtonBase onClick={() => this.deleteCartItem(product)}>
                                         <DeleteForeverIcon />
                                     </ButtonBase>

@@ -1,5 +1,5 @@
 import React from "react";
-import {images, tabs, items, imageDictionary} from './data';
+import {imageDictionary} from './data';
 import {
     Box,
     ButtonBase,
@@ -9,7 +9,7 @@ import {
     Link,
   } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import './App.css';
+import './css/ProductTable.css';
 
 class ProductTable extends React.Component {
     constructor(props) {
@@ -63,47 +63,46 @@ class ProductTable extends React.Component {
     }
 
     render() {
-        const { user, handleItemClick, products, handleAddToCart, handleOpenEditItemModal} = this.props
+        const { user, handleItemClick, products, handleAddToCart, handleOpenEditItemModal, selectedTypeFilter} = this.props
+        // Filter products based on the filter value
+        console.log(selectedTypeFilter);
+        const filteredProducts = selectedTypeFilter === 'tool'||  selectedTypeFilter === 'plant'|| selectedTypeFilter === 'seed'|| selectedTypeFilter === 'planter'? products.filter(item => item.type === selectedTypeFilter) : products;
         return (
-            <Box class="grid-container">
-                {products.map((item, index) => (
-                    <div
-                        className="grid-item"
-                        key={index}
-                    >
-                        <Link
-                            to={'/product'}
-                            onClick={() => handleItemClick(item)}
-                        >
-                            <img style={{
-                                width: '100%',
-                                objectFit: 'contain',
-                            }} src={imageDictionary[item.picture]} />
-                        </Link>
-                        <div className="item-info-box">
-                            <div className="item-title-price">
-                                <label>{item.name}</label>
-                                <span>{item.price}</span>
+            <div className="grid-table">
+                <div className="grid-container-title"> Most Popular Items</div>
+                <Box class="grid-container">
+                    {filteredProducts.map((item, index) => (
+                        <div className="grid-item" key={index}>
+                            <Link
+                                to={'/product'}
+                                onClick={() => handleItemClick(item)}
+                            >
+                                <img  src={imageDictionary[item.picture]} />
+                            </Link>
+                            <div className="item-info-box">
+                                <div className="item-title-price">
+                                    <label>{item.name}</label>
+                                    <span>{item.price}</span>
+                                </div>
+                                <div className="item-buttons" >
+                                    {
+                                        user.role === 'admin' ? (
+                                        <>
+                                            <Button onClick={() => handleOpenEditItemModal(item)} > EDIT </Button>
+                                            
+                                            <Button onClick={() => this.handleRemoveItem(item._id)} > REMOVE </Button>
+                                        </>
+                                        ) : (
+                                        <></>
+                                        )
+                                    }
+                                    <ShoppingCartIcon onClick={() => handleAddToCart(item)} className='cart-icon' />
+                                </div>                                
                             </div>
-                            <div className="item-buttons" >
-                                {
-                                    user.role === 'admin' ? (
-                                    <>
-                                        <Button onClick={() => handleOpenEditItemModal(item)}> EDIT </Button>
-                                        
-                                        <Button onClick={() => this.handleRemoveItem(item._id)}> REMOVE </Button>
-                                    </>
-                                    ) : (
-                                    <></>
-                                    )
-                                }
-                            </div>
-                           
-                            <ShoppingCartIcon onClick={() => handleAddToCart(item)} className='cart-icon' />
                         </div>
-                    </div>
-                ))}
-            </Box>
+                    ))}
+                </Box>
+            </div>
         );
     }
 

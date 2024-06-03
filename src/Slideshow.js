@@ -1,14 +1,11 @@
 import React from "react";
-import {images, tabs, items, imageDictionary} from './data';
+import {imageDictionary} from './data';
 import {
   Link,
 } from "react-router-dom";
+import './css/Slideshow.css'
 
 const delay = 5000;
-
-
-let slideshowimage = [...images];
-slideshowimage.splice(-12);
 
 function Slideshow({products, handleItemClick}) {
   const [index, setIndex] = React.useState(0);
@@ -53,7 +50,7 @@ function Slideshow({products, handleItemClick}) {
                     key={index}
                     onClick={() => handleItemClick(src)}
                 >
-                    <img style={{ width: 340, height: 510 }} src={imageDictionary[src.picture]} />
+                    <img src={imageDictionary[src.picture]} />
                 </div>
             </Link>
         ))}
